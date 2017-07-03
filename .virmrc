@@ -1,0 +1,139 @@
+" vam plugins
+" 
+"
+"      "vim-airline"
+"      "fugitive"
+"      "The_NERD_tree"
+"      "ctrlp"
+"      "Syntastic"
+"      "vimproc-vim"
+"      "rainbow_parentheses"
+"      "Colour-Sampler-Pack"
+"      "vim-gitgutter"
+"
+"
+
+" 256色対応
+"set t_Co=256
+
+" 色ON
+syntax on
+set viminfo='20,<1000,s2000,:20,n~/.viminfo
+
+" 行数を表示
+set number
+" 行数を相対に
+set relativenumber
+
+" 検索設定
+set incsearch
+set showmatch
+set ignorecase
+set hlsearch
+set smartcase
+
+" バックアップファイルを無効
+set nobackup
+
+set title
+" ステータスラインを表示
+set laststatus=2
+
+set nocompatible
+set backspace=indent,eol,start
+
+filetype plugin indent on
+
+" 非表示文字
+set listchars=tab:▸\ ,eol:¬
+
+" tabを2スペース
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set autoindent
+
+" カラー設定
+colorscheme molokai
+"hi Normal ctermfg=252 ctermbg=none
+
+" エンコーディング対応
+set encoding=utf-8
+
+" ファイル内位置を記憶
+augroup JumpCursorOnEdit
+ au!
+ autocmd BufReadPost *
+ \ if expand("<afile>:p:h") !=? $TEMP |
+ \ if line("'\"") > 1 && line("'\"") <= line("$") |
+ \ let JumpCursorOnEdit_foo = line("'\"") |
+ \ let b:doopenfold = 1 |
+ \ if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
+ \ let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
+ \ let b:doopenfold = 2 |
+ \ endif |
+ \ exe JumpCursorOnEdit_foo |
+ \ endif |
+ \ endif
+ " Need to postpone using "zv" until after reading the modelines.
+ autocmd BufWinEnter *
+ \ if exists("b:doopenfold") |
+ \ exe "normal zv" |
+ \ if(b:doopenfold > 1) |
+ \ exe "+".1 |
+ \ endif |
+ \ unlet b:doopenfold |
+ \ endif
+augroup END
+
+" Tmux対応
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when xterm-keys is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
+" NERDTreeをCtrl+nで展開
+map <silent> <C-n> :NERDTreeToggle<CR>
+
+" Alt+方向でウインドウ移動
+nmap <silent> <m-Left>  :wincmd h<CR>
+nmap <silent> <m-Down>  :wincmd j<CR>
+nmap <silent> <m-Up>    :wincmd k<CR>
+nmap <silent> <m-Right> :wincmd l<CR>
+
+nmap <silent> <m-H>     :wincmd h<CR>
+nmap <silent> <m-J>     :wincmd j<CR>
+nmap <silent> <m-K>     :wincmd k<CR>
+nmap <silent> <m-L>     :wincmd l<CR>
+
+" Calendar設定
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+let g:calendar_first_day = "monday"
+
+let g:netrw_liststyle=3
+
+" airline設定
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+" mutt設定
+let g:attach_check_keywords =',添付'
+let g:checkattach_filebrowser = 'ranger'
+
+" ctrlp設定
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+let g:airline#extensions#tmuxline#enabled = 0
+
+call vam#Scripts('~/.vim-scripts', {'tag_regex': '.*'})
+let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
+
+" gitgutterD
+set updatetime=250
+
