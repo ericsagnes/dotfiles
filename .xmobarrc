@@ -1,0 +1,26 @@
+Config { 
+  font = "xft:IPAPGothic-8:bold,FontAwesome:size=8"
+ ,overrideRedirect = False
+ ,borderColor = "black"
+ ,bgColor = "black"
+ ,fgColor = "gray"
+ ,position = TopW L 95
+ ,commands = [ 
+    Run DynNetwork ["-t","↑<tx>kB/s ↓<rx>kB/s","-L","1000000","-H","2000000","-n","orange","-h","red", "-l", "gray"] 10
+   ,Run MultiCpu ["-t", " <total>%", "-L","30","-H","60","-n","gray", "-n", "orange", "-h","red"] 10
+   ,Run Memory ["-t"," <usedratio>%", "-L", "50", "-H", "85", "-l", "gray", "-n", "orange", "-h", "red"] 30
+   ,Run Uptime ["-t", " <days>d <hours>h <minutes>m"] 30
+   ,Run Battery ["-t", " <left>%<leftipat>", "-L", "20", "-H", "50", "-l", "red", "-n", "orange", "-h", "gray", "--", "--idle-icon-pattern", "", "--off-icon-pattern", "<fc=orange>↓</fc>(<timeleft>)", "--on-icon-pattern", "<fc=green>↑</fc>"] 100
+   ,Run Brightness ["-t", "<percent> ", "--", "-D", "intel_backlight"] 10
+   ,Run Locks
+ --,Run Com ".xmonad/scripts/maildir.sh" ["foo@bar/INBOX"] "foo" 60
+   ,Run Com ".xmonad/scripts/parisdate.sh" [] "parisdate" 300
+   ,Run Com ".xmonad/scripts/date.sh" [] "date" 300
+   ,Run Com ".xmonad/scripts/rss.sh" [] "rss" 300
+   ,Run Com "ponymix" ["get-volume"] "volume" 10
+   ,Run StdinReader
+ ]
+ ,sepChar = "%"
+ ,alignSep = "}{"
+ ,template = "%StdinReader% ・ %multicpu% ・ %memory% ・ %battery% ・ %dynnetwork% ・ %uptime% }{[%l-lab%, %clina%, %kototoy%]  [%eric.sagnes%, %eric.jpmb%]  ・ %rss%  ・ %volume%♪ ・ %bright% ・ %date% (%parisdate%) %locks%"
+}
